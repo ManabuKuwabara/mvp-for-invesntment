@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from 'react';
+'use client';
+
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 function Search() {
@@ -14,10 +16,15 @@ function Search() {
   );
 }
 
-const ReportPage = () => {
-  const searchParams = useSearchParams();
-  const companyName = searchParams.get("companyName") || "株式会社虎屋";
+export function Searchbar() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Search />
+    </Suspense>
+  );
+}
 
+const ReportPage = () => {
   // アコーディオンの開閉状態管理
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -34,11 +41,11 @@ const ReportPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-12 rounded-lg shadow-md w-2/3">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">{companyName} 調査結果</h1>
+        {/* Searchbarコンポーネントを使用 */}
+        <Searchbar />
 
         {/* Genspark分析 タイトル */}
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Genspark分析</h2>
-
 
         {/* アコーディオン形式 */}
         <div className="mb-6">
@@ -67,7 +74,6 @@ const ReportPage = () => {
             />
           </div>
 
-          {/* 折りたたみ可能な説明文 */}
           {isOpen1 && (
             <p className="text-base text-gray-800 mt-4">
               株式会社虎屋（とらや）は、東京都港区赤坂に本社を置く和菓子製造・販売会社です。創業は室町時代後期に遡り、約480年の歴史を持つ老舗企業です。1947年に法人化され、現在は「とらや」のブランド名で広く知られています。
