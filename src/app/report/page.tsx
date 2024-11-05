@@ -3,6 +3,17 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
+function Search() {
+  const searchParams = useSearchParams();
+  const companyName = searchParams.get("companyName") || "株式会社虎屋";
+
+  return (
+    <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">
+      {companyName} 調査結果
+    </h1>
+  );
+}
+
 const ReportPage = () => {
   const searchParams = useSearchParams();
   const companyName = searchParams.get("companyName") || "株式会社虎屋";
